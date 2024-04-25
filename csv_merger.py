@@ -4,6 +4,14 @@ import pandas as pd
 # Title of the app
 st.title('CSV Merger')
 
+# Subtitle
+st.markdown(
+    """
+    by [Florian Potier](https://twitter.com/FloPots) - [Intrepid Digital](https://www.intrepidonline.com/)
+    """,
+    unsafe_allow_html=True
+)
+
 # File upload section
 uploaded_files = st.file_uploader("Choose CSV files", accept_multiple_files=True, type=['csv'])
 
