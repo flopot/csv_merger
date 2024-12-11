@@ -46,7 +46,7 @@ if uploaded_files:
     # Create a list of dataframes with source filename
     dataframes = []
     for file in uploaded_files:
-        df = pd.read_csv(file)
+        df = pd.read_csv(file_name, delimiter=';')#Before: df = pd.read_csv(file)
         df['Source File'] = file.name  # Add source filename column
         dataframes.append(df)
     
