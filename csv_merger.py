@@ -43,22 +43,23 @@ st.markdown(
 uploaded_files = st.file_uploader("Choose CSV files", accept_multiple_files=True, type=['csv'])
 
 if uploaded_files:
-    # Create a list of dataframes with source filename
     dataframes = []
     for file in uploaded_files:
         try:
             df = pd.read_csv(file)  # Auto-detect delimiter
-            df['Source File'] = file.name  # Add source filename column
-            dataframes.append(df)
+            dataframes.append(df)  # Append without modifying the structure
         except Exception as e:
             st.error(f"Error reading {file.name}: {e}")
     
     if dataframes:
-        # Concatenate all dataframes into one
+        # Concatenate all dataframes into one BEFORE adding the source file column
         combined_csv = pd.concat(dataframes, ignore_index=True)
-        
-        # Remove duplicate rows
+
+        # Remove duplicates BEFORE adding "Source File"
         combined_csv.drop_duplicates(inplace=True)
+
+        # Now add "Source File" column for reference
+        combined_csv["Source File"] = ""
 
         # Show combined data on the page
         st.write("Here's a preview of the combined CSV:")
@@ -67,3 +68,4 @@ if uploaded_files:
         # Download link for the combined CSV
         csv = combined_csv.to_csv(index=False).encode('utf-8')
         st.download_button(label="Download Merged CSV", data=csv, file_name="merged.csv", mime='text/csv')
+
