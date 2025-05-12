@@ -46,26 +46,22 @@ if uploaded_files:
     dataframes = []
     for file in uploaded_files:
         try:
-            df = pd.read_csv(file)  # Auto-detect delimiter
-            dataframes.append(df)  # Append without modifying the structure
+            df = pd.read_csv(file)
+            df["Source File"] = file.name  # Add filename before appending
+            dataframes.append(df)
         except Exception as e:
             st.error(f"Error reading {file.name}: {e}")
     
     if dataframes:
-        # Concatenate all dataframes into one BEFORE adding the source file column
+        # Concatenate and remove duplicates
         combined_csv = pd.concat(dataframes, ignore_index=True)
-
-        # Remove duplicates BEFORE adding "Source File"
         combined_csv.drop_duplicates(inplace=True)
-
-        # Now add "Source File" column for reference
-        combined_csv["Source File"] = ""
-
-        # Show combined data on the page
+    
+        # Show combined data
         st.write("Here's a preview of the combined CSV:")
         st.dataframe(combined_csv)
-        
-        # Download link for the combined CSV
+    
+        # Download
         csv = combined_csv.to_csv(index=False).encode('utf-8')
         st.download_button(label="Download Merged CSV", data=csv, file_name="merged.csv", mime='text/csv')
 
