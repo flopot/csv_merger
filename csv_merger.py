@@ -1,5 +1,5 @@
 """CSV Merger, Streamlit version pushed as close to the gointrepid.com style as Streamlit allows.
-Same logic as github.com/flopot/csv_merger. Theme in .streamlit/config.toml; the rest is CSS below."""
+Same logic as github.com/flopot/csv_merger. Theme in .streamlit/config.toml; the rest is CSS below. No site menu: logo + link back to the tools page."""
 import pandas as pd
 import streamlit as st
 
@@ -11,21 +11,19 @@ CSS = """
 header[data-testid="stHeader"], [data-testid="stToolbar"], [data-testid="stDecoration"], [data-testid="stStatusWidget"] { display: none !important; }
 .block-container { padding-top: 0 !important; max-width: 900px !important; }
 
-/* Site nav (static copy: links work, dropdowns and mobile menu do not). */
-.id-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 999990; height: 96px; display: flex; align-items: center;
-  justify-content: space-between; padding: 0 40px; background: rgba(10,11,15,.92); border-bottom: 1px solid rgba(255,255,255,.06); }
-.id-nav img { height: 24px; }
-.id-nav ul { display: flex; gap: 36px; list-style: none; margin: 0; }
-.id-nav ul a { color: #bfbaba !important; text-decoration: none !important; font-size: 14px; letter-spacing: .06em; text-transform: uppercase; }
-.id-nav .cta { background: #a2ff2c; color: #0a0b0f !important; padding: 10px 24px; font-weight: 700; font-size: 13px; letter-spacing: .04em;
-  text-transform: uppercase; text-decoration: none !important; border-radius: 2px; }
-@media (max-width: 860px) { .id-nav ul { display: none; } .id-nav { padding: 0 20px; height: 72px; } }
+/* Top row: the site logo at the size gointrepid.com uses (63px tall) and a link back to the tools page. */
+.id-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 28px 0 0; }
+.id-top img { height: 63px; width: auto; display: block; }
+.id-back { font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: #a2ff2c !important; text-decoration: none !important; white-space: nowrap; }
+.id-back:hover { color: #95ff0e !important; }
+@media (max-width: 640px) { .id-top img { height: 48px; } }
 
 /* Hero */
-.id-hero { padding: 150px 0 36px; }
-.id-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: #a2ff2c; margin-bottom: 22px; }
+.id-hero { padding: 56px 0 36px; }
 .id-hero h1 { font-size: clamp(36px, 5.5vw, 64px) !important; line-height: 1.08 !important; letter-spacing: -.02em; padding: 0 0 18px !important; }
-.id-hero p { font-size: 18px; line-height: 1.6; color: #bfbaba; max-width: 700px; }
+.id-hero h1 { margin: 0 !important; }
+.id-hero p { margin: 4px 0 0 !important; font-size: 18px; line-height: 1.6; color: #bfbaba; max-width: 700px; }
 .id-hero p strong { color: #e8eaf0; }
 
 /* Tool card: the outer block gets the site's surface + volt edge. */
@@ -50,14 +48,11 @@ header[data-testid="stHeader"], [data-testid="stToolbar"], [data-testid="stDecor
 """
 st.html(CSS)
 st.html("""
-<nav class="id-nav">
-  <a href="https://www.gointrepid.com/"><img src="app/static/logo-white.png" alt="Intrepid Digital"></a>
-  <ul><li><a href="https://www.gointrepid.com/our-work/">Our Work</a></li><li><a href="https://www.gointrepid.com/blog/">Blog</a></li>
-      <li><a href="https://www.gointrepid.com/about/">About</a></li><li><a href="https://www.gointrepid.com/tools/">Tools</a></li></ul>
-  <a class="cta" href="https://www.gointrepid.com/work-with-us/">Work With Us</a>
-</nav>
+<div class="id-top">
+  <a href="https://www.gointrepid.com/tools/" target="_blank" rel="noopener"><img src="app/static/logo-white.png" alt="Intrepid Digital"></a>
+  <a class="id-back" href="https://www.gointrepid.com/tools/" target="_blank" rel="noopener">&larr; All Tools</a>
+</div>
 <div class="id-hero">
-  <div class="id-eyebrow">Free SEO Tool</div>
   <h1>CSV File Merger Tool</h1>
   <p>Combine CSV exports into one file with a <strong>Source File</strong> column, and duplicate rows removed.</p>
 </div>
